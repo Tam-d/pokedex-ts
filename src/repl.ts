@@ -1,10 +1,13 @@
 import { createInterface } from "node:readline";
+import { CLICommand } from "./command.js";
+import { getCommands } from "./command.js";
 
 export function cleanInput(input: string): string[] {
   return input.toLowerCase().trim().split(/\s+/);
 }
 
 export function startREPL() {
+    let availableCommands: Record<string, CLICommand> = getCommands();
 
     const rl = createInterface({
         input: process.stdin,
@@ -18,9 +21,12 @@ export function startREPL() {
         if(input.length === 0)
             rl.prompt;
 
-        let result = cleanInput(input);
+        let inputCommand = cleanInput(input);
+        let userCLICommand : CLICommand = availableCommands[inputCommand[0]];
 
-        console.log(`Your command was: ${result[0]}`);
+        if (userCLICommand) {
+            userCLICommand.callback(availableCommands)
+        }
 
         rl.prompt();
     }); 
