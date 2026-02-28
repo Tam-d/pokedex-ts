@@ -17,20 +17,16 @@ export type CLICommand = {
 };
 
 export function initSate(): State {
-    let availableCommands: Record<string, CLICommand> = getCommands();
-
     const rl = createInterface({
         input: process.stdin,
         output: process.stdout,
         prompt: "Pokedex > "
     });
 
-    const pokeApi : PokeAPI = new PokeAPI();
-
     return {
         readline: rl,
-        commands: availableCommands,
-        pokeApi: pokeApi,
+        commands: getCommands(),
+        pokeApi: new PokeAPI(),
         prevLocationsURL: null,
         nextLocationsURL: "https://pokeapi.co/api/v2/location-area?offset=0&limit=20"
     }
