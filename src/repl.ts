@@ -5,13 +5,13 @@ export function cleanInput(input: string): string[] {
   return input.toLowerCase().trim().split(/\s+/);
 }
 
-export function startREPL(state: State) {
+export async function startREPL(state: State) {
     const availableCommands = state.commands;
     const rl = state.readline;
 
     rl.prompt();
 
-    rl.on('line', (input:string) => {
+    rl.on('line', async (input:string) => {
         if(input.length === 0)
             rl.prompt;
 
@@ -19,7 +19,7 @@ export function startREPL(state: State) {
         let userCLICommand : CLICommand = availableCommands[inputCommand[0]];
 
         if (userCLICommand) {
-            userCLICommand.callback(state)
+            await userCLICommand.callback(state);
         }
 
         rl.prompt();
