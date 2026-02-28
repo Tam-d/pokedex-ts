@@ -1,19 +1,13 @@
-import { createInterface } from "node:readline";
-import { CLICommand } from "./command.js";
+import { State, CLICommand } from "./state.js";
 import { getCommands } from "./command.js";
 
 export function cleanInput(input: string): string[] {
   return input.toLowerCase().trim().split(/\s+/);
 }
 
-export function startREPL() {
-    let availableCommands: Record<string, CLICommand> = getCommands();
-
-    const rl = createInterface({
-        input: process.stdin,
-        output: process.stdout,
-        prompt: "Pokedex > "
-    });
+export function startREPL(state: State) {
+    const availableCommands = state.commands;
+    const rl = state.readline;
 
     rl.prompt();
 
@@ -25,7 +19,7 @@ export function startREPL() {
         let userCLICommand : CLICommand = availableCommands[inputCommand[0]];
 
         if (userCLICommand) {
-            userCLICommand.callback(availableCommands)
+            userCLICommand.callback(state)
         }
 
         rl.prompt();
