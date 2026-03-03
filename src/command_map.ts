@@ -17,8 +17,6 @@ export async function commandMap(state : State) {
             console.log(`${location.name}`);
         }
     }
-
-    
 }
 
 export async function commandMapB(state : State) {
