@@ -29,7 +29,7 @@ export class Cache {
     }
 
     #reap() {
-        for(const key in this.#cache.keys()) {
+        for(const key of this.#cache.keys()) {
             const cacheEntry = this.#cache.get(key)?.val;
 
             if(cacheEntry.createdAt < Date.now() - this.#interval) {
@@ -40,7 +40,8 @@ export class Cache {
 
     #startReapLoop() {
         try{
-            this.#reapIntervalId = setInterval(this.#reap, this.#interval)
+            this.#reapIntervalId = 
+                setInterval(this.#reap.bind(this), this.#interval)
         }
         catch(e) {
             console.log(`Error in startReapLoop: ${e}`);
