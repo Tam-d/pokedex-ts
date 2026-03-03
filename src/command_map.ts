@@ -8,6 +8,8 @@ export async function commandMap(state : State) {
             state.nextLocationsURL
         );
 
+        console.log(response);
+
         state.prevLocationsURL = response.previous;
         state.nextLocationsURL = response.next;
 
@@ -17,4 +19,22 @@ export async function commandMap(state : State) {
     }
 
     
+}
+
+export async function commandMapB(state : State) {
+
+    if(state.prevLocationsURL != null) {
+        let response : ShallowLocations = await state.pokeApi.fetchLocations(
+            state.prevLocationsURL
+        );
+
+        console.log(response);
+
+        state.prevLocationsURL = response.previous;
+        state.nextLocationsURL = response.next;
+
+        for(const location of response["results"]) {
+            console.log(`${location.name}`)
+        }
+    }
 }
