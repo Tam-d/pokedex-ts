@@ -6,8 +6,8 @@ export type State = {
     readline: Interface;
     commands: Record<string, CLICommand>;
     pokeApi: PokeAPI
-    prevLocationsURL: string | null,
-    nextLocationsURL: string | null
+    prevLocationsURL: string,
+    nextLocationsURL: string,
 }
 
 export type CLICommand = {
@@ -27,7 +27,7 @@ export function initSate(): State {
         readline: rl,
         commands: getCommands(),
         pokeApi: new PokeAPI(),
-        prevLocationsURL: null,
-        nextLocationsURL: "https://pokeapi.co/api/v2/location-area?offset=0&limit=20"
+        prevLocationsURL: "",
+        nextLocationsURL: ""
     }
 }
