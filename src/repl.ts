@@ -19,7 +19,12 @@ export async function startREPL(state: State) {
         let userCLICommand : CLICommand = availableCommands[inputCommand[0]];
 
         if (userCLICommand) {
-            await userCLICommand.callback(state);
+            try {
+                await userCLICommand.callback(state);
+            }
+            catch(e) {
+                console.log((e as Error).message);
+            }
         }
 
         rl.prompt();
