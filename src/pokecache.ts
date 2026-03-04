@@ -8,8 +8,8 @@ export class Cache {
     #reapIntervalId: NodeJS.Timeout | undefined = undefined;
     #interval: number;
 
-    constructor(num: number) {
-        this.#interval = num;
+    constructor(interval: number) {
+        this.#interval = interval;
         this.#startReapLoop();
     }
 
