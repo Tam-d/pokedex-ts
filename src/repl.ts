@@ -17,10 +17,11 @@ export async function startREPL(state: State) {
 
         let inputCommand = cleanInput(input);
         let userCLICommand : CLICommand = availableCommands[inputCommand[0]];
+        let commandArgs : string[] = inputCommand.slice(1);
 
         if (userCLICommand) {
             try {
-                await userCLICommand.callback(state);
+                await userCLICommand.callback(state, ...commandArgs);
             }
             catch(e) {
                 console.log((e as Error).message);
