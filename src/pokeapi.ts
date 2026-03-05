@@ -8,8 +8,19 @@ export type ShallowLocations = {
 };
 
 export type Location = {
+  id: number,
   name: string,
   url: string,
+  pokemon_encounters: Pokemon_Encounters[]
+};
+
+export type Pokemon_Encounters = {
+    pokemon: Pokemon
+};
+
+export type Pokemon = {
+    name: string,
+    url: string
 };
 
 export class PokeAPI {
@@ -41,20 +52,24 @@ export class PokeAPI {
   }
 
   async fetchLocation(locationName: string): Promise<Location> {
-
-    const cacheEntry : CacheEntry<Location> = this.#cache.get(locationName);
+    const url = `${PokeAPI.baseURL}/location-area/${locationName}`
     
-    if(cacheEntry) {
-        console.log(`Retrieving location from the cache:`)
-        return cacheEntry.val;
+    const cacheEntry: Location = this.#cache.get(url);
+    
+    if(cacheEntry !== undefined) {
+        console.log(`Retrieving location from the cache.`)
+        return cacheEntry;
     }
     
-    const response = await fetch(`${PokeAPI.baseURL}/location/${locationName}`);
+    const response = await fetch(url);
 
     if (!response.ok) {
         throw new Error(`Error fetching location: ${response.status}`);
-    }  
+    } 
 
-    return response.json();
+    const responseJson = response.json()
+    this.#cache.add(url, responseJson)
+
+    return responseJson;
   }
 }
