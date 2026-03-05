@@ -3,6 +3,7 @@ import { commandExit } from "./command_exit.js";
 import { commandHelp } from "./command_help.js";
 import { commandMap } from "./command_map.js";
 import { commandMapB } from "./command_map.js";
+import { commandExplore } from "./command_explore.js";
 
 export function getCommands(): Record<string, CLICommand> {
   return {
@@ -28,6 +29,12 @@ export function getCommands(): Record<string, CLICommand> {
         name: "mapb",
         description: "Locations from the poki api",
         callback: commandMapB
-    }
+    },
+
+    explore: {
+      name: "explore",
+      description: "",
+      callback: commandExplore
+    },
   };
 }
