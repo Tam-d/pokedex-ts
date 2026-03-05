@@ -11,10 +11,10 @@ export type Location = {
   id: number,
   name: string,
   url: string,
-  pokemon_encounters: Pokemon_Encounters[]
+  pokemon_encounters: PokemonEncounters[]
 };
 
-export type Pokemon_Encounters = {
+export type PokemonEncounters = {
     pokemon: Pokemon
 };
 
