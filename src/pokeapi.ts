@@ -15,12 +15,19 @@ export type Location = {
 };
 
 export type PokemonEncounters = {
-    pokemon: Pokemon
+    pokemon: {
+        name: string,
+        url: string,
+    }
 };
 
 export type Pokemon = {
     name: string,
-    url: string
+    base_experience: number,
+    height: number,
+    is_default: boolean,
+    order: number,
+    weight: number,
 };
 
 export class PokeAPI {
@@ -72,4 +79,29 @@ export class PokeAPI {
 
     return responseJson;
   }
+
+  async fetchPokemon(pokemonName: string): Promise<Pokemon> {
+    const url = `${PokeAPI.baseURL}/pokemon/${pokemonName}/`;
+
+    console.log(url)
+
+    const cacheEntry: Pokemon = this.#cache.get(url);
+    
+    if(cacheEntry !== undefined) {
+        console.log(`Retrieving pokemon info from the cache.`)
+        return cacheEntry;
+    }
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+        throw new Error(`Error fetching pokemon: ${response.status}`);
+    } 
+
+    const responseJson = response.json()
+    this.#cache.add(url, responseJson)
+
+    return responseJson;
+  }
+
 }

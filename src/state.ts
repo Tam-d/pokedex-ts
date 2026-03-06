@@ -1,11 +1,12 @@
 import { createInterface, type Interface } from "node:readline";
 import { getCommands } from "./command.js";
-import { PokeAPI } from "./pokeapi.js";
+import { PokeAPI, Pokemon } from "./pokeapi.js";
 
 export type State = {
     readline: Interface;
     commands: Record<string, CLICommand>;
     pokeApi: PokeAPI
+    pokedex: Record<string, Pokemon>
     prevLocationsURL: string,
     nextLocationsURL: string,
 }
@@ -27,6 +28,7 @@ export function initSate(): State {
         readline: rl,
         commands: getCommands(),
         pokeApi: new PokeAPI(),
+        pokedex: {},
         prevLocationsURL: "",
         nextLocationsURL: ""
     }
