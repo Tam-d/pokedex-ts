@@ -28,6 +28,21 @@ export type Pokemon = {
     is_default: boolean,
     order: number,
     weight: number,
+    stats: {
+        base_stat: number,
+        effort: number,
+        stat: {
+            name: string,
+            url: string,
+        }
+    }[],
+    types: {
+        slot: number,
+        type: {
+            name: string,
+            url: string,
+        }
+    }[]
 };
 
 export class PokeAPI {
