@@ -83,8 +83,6 @@ export class PokeAPI {
   async fetchPokemon(pokemonName: string): Promise<Pokemon> {
     const url = `${PokeAPI.baseURL}/pokemon/${pokemonName}/`;
 
-    console.log(url)
-
     const cacheEntry: Pokemon = this.#cache.get(url);
     
     if(cacheEntry !== undefined) {
